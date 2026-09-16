@@ -1,23 +1,58 @@
-import { useState } from 'react'
+const Header = ({ course_name }) => {
+  return <h1>{course_name}</h1>
+}
 
-const App = () => {
-  const [value, setValue] = useState(10)
-  
+const Part = ({ part }) => {
+  return (
+    <p>
+      {part.name} {part.exercises}
+    </p>
+  )
+}
 
-  const setToValue = (newValue) => () => {
-    console.log('value now', newValue)  // print the new value to console
-    setValue(newValue)
-  }
-  
+const Content = ({ parts }) => {
   return (
     <div>
-      {value}
-
-      <button onClick={setToValue(1000)}>thousand</button>
-      <button onClick={setToValue(0)}>reset</button>
-      <button onClick={setToValue(value + 1)}>increment</button>
+      {parts.map((part) => (
+        <Part key={part.id} part={part} />
+      ))}
     </div>
   )
+}
+
+const Course = ({ course }) => {
+  return (
+    <div>
+      <Header course_name={course.name} />
+      <Content parts={course.parts} />
+    </div>
+  )
+}
+
+const App = () => {
+  const course = {
+    id: 1,
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10,
+        id: 1
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7,
+        id: 2
+      },
+      {
+        name: 'State of a component',
+        exercises: 14,
+        id: 3
+      }
+    ]
+  }
+
+  return <Course course={course} />
 }
 
 export default App
